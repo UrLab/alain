@@ -47,6 +47,8 @@ void setup_wifi() {
     String superHostname = String("hal-") + hostname;
     WiFi.mode(WIFI_STA);
     WiFi.hostname(superHostname);
+    WiFi.setAutoConnect(true);
+    WiFi.setAutoReconnect(true);
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {

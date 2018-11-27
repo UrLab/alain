@@ -17,7 +17,7 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic + " " + str(msg.payload))
 
-    if msg.topic == "action/OpenLever/state_change":
+    if msg.topic == "switch/opinator/levier":
         assert msg.payload in (b"0", b"1")
         is_up = msg.payload == b"1"
         requests.post(
