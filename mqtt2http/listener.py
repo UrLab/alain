@@ -1,7 +1,12 @@
 import paho.mqtt.client as mqtt
 import requests
+import logging
+import os
 
 import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -29,14 +34,27 @@ def on_message(client, userdata, msg):
         )
 
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
+if __name__ == "__main__":
+    logging.basicConfig(
+        filename="{}/mqtt2http.log".format(os.path.dirname(os.path.abspath(__file__))),
+        level=settings.LOG_LEVEL,
+        filemode='a',
+        format="%(levelname)s:%(name)s:[%(asctime)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-client.connect(settings.MQTT_SERVER, 1883, 60)
+    logging.info(" ")
+    logging.info("-" * 50)
+    logging.info(" ")
 
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
-client.loop_forever()
+    try:
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+
+        client.connect(settings.MQTT_SERVER, 1883, 60)
+        client.loop_forever()
+    except Exception:
+        logger.exception("Well, fuck.")
