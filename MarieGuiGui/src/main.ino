@@ -39,6 +39,10 @@ void setup_wifi() {
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     if(length > 0){
         if(payload[0] == '0'){
+            if(relay_state == HIGH){
+              delay(120000);
+              // to make the light wait until people are down stairs after closing
+            }
             relay_state = LOW;
         }
         else if(payload[0] == '1'){
