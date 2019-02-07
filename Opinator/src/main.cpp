@@ -1,12 +1,13 @@
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
 #include <ArduinoOTA.h>
+#include "../../../../wifiConfig.h"
 
 #define LEVIER D1
 
 const char* hostname = "opinator";
-const char* ssid = "";
-const char* password = "";
+const char* ssid = SSID;
+const char* password = PASSWORD;
 const char* mqtt_server = "hal.lan";
 const int a = 0;
 
