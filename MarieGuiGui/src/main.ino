@@ -20,6 +20,7 @@ WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
 Ticker refresh;
+Ticker off;
 
 void setup_wifi() {
     delay(10);
@@ -39,16 +40,21 @@ void setup_wifi() {
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     if(length > 0){
         if(payload[0] == '0'){
-            relay_state = LOW;
+            off.once((float)120, off_callback);
         }
         else if(payload[0] == '1'){
             relay_state = HIGH;
+            off.detach();
         }
     }
 }
 
 void refresh_callback() {
     digitalWrite(RELAY, relay_state);
+}
+
+void off_callback()  {
+    relay_state = LOW;
 }
 
 void setup() {
