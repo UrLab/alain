@@ -28,7 +28,6 @@ def sendColor(r, g, b):
     client = mqtt.Client()
     client.connect("hal.lan")
     client.publish("color/plafond", payload=chr(r)+chr(g)+chr(b), qos=1, retain=True)
-    print("SEND " + chr(r)+chr(g)+chr(b))
 
 
 if __name__ == '__main__':
