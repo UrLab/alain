@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+  <body>
+    <h1>Vive les leds</h1>
+    {% if hexa_col %}
+    <p>La couleur actuelle <span style="color:{{hexa_col}}"> couleur </span></p>
+    {% else %}
+    <p>Les leds sont eteintes</p>
+    {% endif %}
+    <form method="POST">
+    <input name="text" placeholder="inserez la couleur">
+    <input type="submit">
+</form>
+  </body>
+
+</html>
