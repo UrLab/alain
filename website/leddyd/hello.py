@@ -29,5 +29,6 @@ def sendColor(r, g, b):
     client.connect("hal.lan")
     client.publish("color/plafond", payload=bytes([r, g, b]), qos=1, retain=True)
 
+
 if __name__ == '__main__':
    app.run(debug = True)
