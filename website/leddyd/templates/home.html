@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html>
+<style>
+.btn-xl {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    align-items:center;
+    justify-content:center;
+    text-transform:uppercase;
+}
+.rainbow-button {
+  padding: 10px 20px;
+  background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+  border-radius:10px;
+  align-items:center;
+  justify-content:center;
+  text-transform:uppercase;
+  color:#FFFFFF;
+  font-size: 20px;
+}
+.rainbow-button:hover {
+  animation:slidebg 2s linear infinite;
+}
 
-  <body>
-    <h1>Vive les leds</h1>
-    {% if hexa_col %}
-    <p>La couleur actuelle <span style="color:{{hexa_col}}"> couleur </span></p>
-    {% else %}
-    <p>Les leds sont eteintes</p>
-    {% endif %}
-    <form method="POST">
-      <label for="colorWell">Color:</label>
-      <input name="text" type="color" value="#ff0000" id="colorWell">
-    <input type="submit">
-</form>
-  </body>
+@keyframes slidebg {
+  to {
+    background-position:20vw;
+  }
+}
+</style>
+<body>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <h1>Choisis ta weemos</h1>
+    <a href ="/plafond" type="button" class="rainbow-button" role="button">plafond</a>
+    <a href ="/porte" type="button" class="btn-xl btn-success" role="button">porte</a>
+    <a href ="/infrabel" type="button" class="btn-xl btn-warning" role="button">infrabel</a>
+    <a href ="/radioactif" type="button" class="btn-xl btn-primary" role="button">radioactif</a>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
 
 </html>
