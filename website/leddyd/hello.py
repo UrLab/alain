@@ -80,5 +80,6 @@ def sendColor(r, g, b, topic):
     client.publish("color/{}".format(topic), payload=bytes([r, g, b]), qos=1, retain=True)
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
