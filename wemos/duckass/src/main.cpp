@@ -5,10 +5,10 @@
 #include "../../../../wifiConfig.h"
 
 #define DUCK1 4 // D2
-#define DUCK2 14 //D5
-#define DUCK3 12 //D6
-#define DUCK4 13 //D7
-#define OPEN_TOPIC  "events/open"
+#define DUCK2 14 // D5
+#define DUCK3 12 // D6
+#define DUCK4 13 // D7
+#define OPEN_TOPIC  "switch/opinator/levier"
 #define REFRESH_RATE 1
 
 const char* hostname = "duckass";
