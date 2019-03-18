@@ -2,8 +2,9 @@
 #include "PubSubClient.h"
 #include <ArduinoOTA.h>
 #include "wifiConfig.h"
+#include "template.h"
 
-// const char* hostname = "MY_HOSTNAE(folder_name)";
+// char* hostname = "MY_HOSTNAE(folder_name)";
 const char* ssid = SSID;
 const char* password = PASSWORD;
 const char* mqtt_server = "hal.lan";
@@ -36,7 +37,7 @@ void setup_wifi(char hostname) {
     }
 }
 
-void reconnect() {
+void reconnect(char hostname) {
     String message = String(hostname) + " " + WiFi.localIP().toString() + " " + WiFi.macAddress();
     while (!mqttClient.connected()) {
         if (mqttClient.connect("ESP8266Client")) {
@@ -47,9 +48,9 @@ void reconnect() {
     }
 }
 
-void working_loop() {
+void working_loop(char hostname) {
     if (!mqttClient.connected()) {
-        reconnect();
+        reconnect(hostname);
     }
     mqttClient.loop();
     ArduinoOTA.handle();
