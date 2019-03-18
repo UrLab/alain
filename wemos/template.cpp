@@ -2,7 +2,7 @@
 #include "PubSubClient.h"
 #include <ArduinoOTA.h>
 #include "wifiConfig.h"
-#include "template.h"
+#include "template.hpp"
 
 // char* hostname = "MY_HOSTNAE(folder_name)";
 const char* ssid = SSID;
