@@ -1,7 +1,0 @@
-#ifndef WIFI_CONFIG_H
-#define WIFI_CONFIG_H
-
-#define SSID "UrLab"
-#define PASSWORD "SuperSecret"
-
-#endif // WIFI_CONFIG_H
