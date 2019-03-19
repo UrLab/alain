@@ -3,22 +3,13 @@
 #include <ArduinoOTA.h>
 #include "../../wifiConfig.h"
 
-const char* hostname = "MY_HOSTNAE(folder_name)";
+const char* hostname = "hostname a changer";
 const char* ssid = SSID;
 const char* password = PASSWORD;
 const char* mqtt_server = "hal.lan";
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
-
-void setup() {
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, LOW);
-
-    setup_wifi();
-    ArduinoOTA.begin();
-    mqttClient.setServer(mqtt_server, 1883);
-}
 
 void setup_wifi() {
     delay(10);
@@ -36,10 +27,19 @@ void setup_wifi() {
     }
 }
 
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
+
+    setup_wifi();
+    ArduinoOTA.begin();
+    mqttClient.setServer(mqtt_server, 1883);
+}
+
 void reconnect() {
     String message = String(hostname) + " " + WiFi.localIP().toString() + " " + WiFi.macAddress();
     while (!mqttClient.connected()) {
-        if (mqttClient.connect("ESP8266Client")) {
+        if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
         } else {
             delay(5000);
