@@ -1,6 +1,7 @@
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
 #include <ArduinoOTA.h>
+#include "../../wifiConfig.h"
 
 const char* hostname = "MY_HOSTNAE(folder_name)";
 const char* ssid = SSID;
