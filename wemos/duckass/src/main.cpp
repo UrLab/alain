@@ -2,7 +2,7 @@
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
 #include <ArduinoOTA.h>
-#include "../../../../wifiConfig.h"
+#include "../../wifiConfig.h"
 
 #define DUCK1 4 // D2
 #define DUCK2 13 // D7
