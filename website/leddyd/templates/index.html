@@ -45,19 +45,22 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-bacon"></i>
           <span>Wemos</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Multicolor:</h6>
           <a class="dropdown-item" href="/plafond">Plafond</a>
+          <a class="dropdown-item" href="/alcool">Alcool</a>
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">On / off:</h6>
           <a class="dropdown-item" href="/porte">Porte</a>
           <a class="dropdown-item" href="/radioactif">Radioactif</a>
           <a class="dropdown-item" href="/infrabel">Infrabel</a>
+          <a class="dropdown-item" href="/exterior">Exterior</a>
         </div>
       </li>
+      <!--
       <li class="nav-item">
         <a class="nav-link" href="charts.html">
           <i class="fas fa-fw fa-chart-area"></i>
@@ -68,6 +71,7 @@
           <i class="fas fa-fw fa-table"></i>
           <span>Tables</span></a>
       </li>
+      -->
     </ul>
 
     <div id="content-wrapper">
@@ -88,7 +92,7 @@
             <div class="card text-white bg-primary o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
-                  <i class="fas fa-fw fa-rocket"></i>
+                  <i class="fas fa-fw fa-lightbulb"></i>
                 </div>
                 <div class="mr-5">Plafond</div>
               </div>
@@ -101,15 +105,35 @@
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
-            {% if led_porte[:3] == "#00" %}
-            <div class="card text-white bg-danger o-hidden h-100">
-            {% else %}
-            <div class="card text-white bg-success o-hidden h-100">
-            {% endif %}
+            <div class="card text-white bg-primary o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
-                  <i class="fas fa-fw fa-bolt"></i>
+                  <i class="fa fa-glass-cheers fa-1x"></i>
                 </div>
+                <div class="mr-5">Alcool</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/alcool">
+                <span class="float-left">Controler les leds</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            {% if led_porte[:3] == "#00" %}
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-door-closed fa-sm"></i>
+                </div>
+            {% else %}
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-door-open fa-sm"></i>
+                </div>
+            {% endif %}
                 <div class="mr-5">Porte</div>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="/porte">
@@ -128,9 +152,9 @@
             {% endif %}
               <div class="card-body">
                 <div class="card-body-icon">
-                  <i class="fas fa-fw fa-exclamation-triangle"></i>
+                  <i class="fas fa-fw fa-radiation-alt "></i>
                 </div>
-                <div class="mr-5">radioactif</div>
+                <div class="mr-5">Radioactif</div>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="/radioactif">
                 <span class="float-left">Controler les leds</span>
@@ -148,9 +172,9 @@
             {% endif %}
               <div class="card-body">
                 <div class="card-body-icon">
-                  <i class="fas fa-fw fa-bolt"></i>
+                  <i class="fas fa-fw fa-hard-hat"></i>
                 </div>
-                <div class="mr-5">infrabel</div>
+                <div class="mr-5">Infrabel</div>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="/infrabel">
                 <span class="float-left">Controler les leds</span>
@@ -160,9 +184,29 @@
               </a>
             </div>
           </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            {% if led_exterior[:3] == "#00" %}
+            <div class="card text-white bg-danger o-hidden h-100">
+            {% else %}
+            <div class="card text-white bg-success o-hidden h-100">
+            {% endif %}
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-campground"></i>
+                </div>
+                <div class="mr-5">Exterior</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/exterior">
+                <span class="float-left">Controler les leds</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <!-- Area Chart Example-->
+        <!-- Area Chart Example
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-chart-area"></i>
@@ -172,6 +216,7 @@
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
+        -->
 
       <!-- Sticky Footer -->
       <footer class="footer">
