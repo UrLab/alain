@@ -12,7 +12,8 @@ def my_form():
     led_porte = receiveColor("porte")
     led_radio = receiveColor("radioactif")
     led_infra = receiveColor("infrabel")
-    return render_template('index.html', led_porte=led_porte, led_radio=led_radio, led_infra=led_infra)
+    led_exterior = receiveColor("exterior")
+    return render_template('index.html', led_porte=led_porte, led_radio=led_radio, led_infra=led_infra, led_exterior=led_exterior)
 
 
 @app.route('/plafond')
@@ -35,6 +36,26 @@ def my_form_post_plafond():
         return render_template('multicolor.html')
 
 
+@app.route('/alcool')
+def my_form_alcool():
+    return render_template('multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
+
+
+@app.route('/alcool', methods=['POST'])
+def my_form_post_alcool():
+    hexa_coul = request.form['text']
+    if hexa_coul != "":
+        coul_r = int(hexa_coul[1:3], 16)
+        coul_g = int(hexa_coul[3:5], 16)
+        coul_b = int(hexa_coul[5:7], 16)
+
+        sendColor(coul_r, coul_g, coul_b, "alcool")
+        return render_template('multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
+    else:
+        sendColor(0, 0, 0, "alcool")
+        return render_template('multicolor.html')
+
+
 @app.route('/porte')
 def my_form_porte():
     return render_template('on_off.html', titre="Porte")
@@ -48,6 +69,12 @@ def my_form_radioactif():
 @app.route('/infrabel')
 def my_form_infrabel():
     return render_template('on_off.html', titre="Infrabel")
+
+
+@app.route('/exterior')
+def my_form_exterior():
+    return render_template('on_off.html', titre="Exterior")
+
 
 
 @app.route("/background_process", methods=['POST'])
@@ -64,6 +91,8 @@ def backend():
 
 def sendColor(r, g, b, topic):
     client = mqtt.Client()
+    print("send")
+    print(topic)
     client.connect("hal.lan")
     client.publish("color/{}".format(topic), payload=bytes([r, g, b]), qos=1, retain=True)
 
