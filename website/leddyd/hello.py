@@ -24,16 +24,17 @@ def my_form_plafond():
 @app.route('/plafond', methods=['POST'])
 def my_form_post_plafond():
     hexa_coul = request.form['text']
-    if hexa_coul != "":
+    anim = request.form.get('anim')
+    if anim == "Rainbow":
+        sendColor(255, 255, 255, "animation/plafond")
+    else:
         coul_r = int(hexa_coul[1:3], 16)
         coul_g = int(hexa_coul[3:5], 16)
         coul_b = int(hexa_coul[5:7], 16)
 
-        sendColor(coul_r, coul_g, coul_b, "plafond")
-        return render_template('multicolor.html', hexa_col=receiveColor("plafond"), titre="Plafond")
-    else:
-        sendColor(0, 0, 0, "plafond")
-        return render_template('multicolor.html')
+        sendColor(0, 0, 0, "animation/plafond")
+        sendColor(coul_r, coul_g, coul_b, "color/plafond")
+    return render_template('multicolor.html', hexa_col=receiveColor("plafond"), titre="Plafond")
 
 
 @app.route('/alcool')
@@ -44,16 +45,17 @@ def my_form_alcool():
 @app.route('/alcool', methods=['POST'])
 def my_form_post_alcool():
     hexa_coul = request.form['text']
-    if hexa_coul != "":
+    anim = request.form.get('anim')
+    if anim == "Rainbow":
+        sendColor(255, 255, 255, "animation/alcool")
+    else:
         coul_r = int(hexa_coul[1:3], 16)
         coul_g = int(hexa_coul[3:5], 16)
         coul_b = int(hexa_coul[5:7], 16)
 
-        sendColor(coul_r, coul_g, coul_b, "alcool")
-        return render_template('multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
-    else:
-        sendColor(0, 0, 0, "alcool")
-        return render_template('multicolor.html')
+        sendColor(0, 0, 0, "animation/alcool")
+        sendColor(coul_r, coul_g, coul_b, "color/alcool")
+    return render_template('multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
 
 
 @app.route('/porte')
@@ -76,25 +78,21 @@ def my_form_exterior():
     return render_template('on_off.html', titre="Exterior")
 
 
-
 @app.route("/background_process", methods=['POST'])
 def backend():
     led_state = request.form.get("on")
     topic = json.loads(request.form.get("topic")).lower()
-    print(led_state)
     if led_state == "true":
-        sendColor(255, 255, 255, topic)
+        sendColor(255, 255, 255, "color/{}".format(topic))
     else:
-        sendColor(0, 0, 0, topic)
+        sendColor(0, 0, 0, "color/{}".format(topic))
     return led_state
 
 
 def sendColor(r, g, b, topic):
     client = mqtt.Client()
-    print("send")
-    print(topic)
     client.connect("hal.lan")
-    client.publish("color/{}".format(topic), payload=bytes([r, g, b]), qos=1, retain=True)
+    client.publish(topic, payload=bytes([r, g, b]), qos=1, retain=True)
 
 
 def receiveColor(topic):
