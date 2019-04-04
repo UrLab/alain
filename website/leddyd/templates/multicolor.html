@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>{{titre}}</title>
+  <title id = "topic">{{titre}}</title>
 
   <!-- Custom fonts for this template-->
   <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -97,11 +97,12 @@
           <p>Les leds sont eteintes</p>
         {% endif %}
           <form method="POST">
-            <label for="colorWell">Color:</label>
-            <input name="text" type="color" value="#ff0000" id="colorWell">
-            <input type="submit">
+            <label for="colorWell" >Couleur à envoyer:</label><br>
+            <input name="text" type="color" id="colorWell" >
+            <input type="submit" value = "Changer la couleur" ><br><br><br>
+            <h1> Animations disponibles : </h1><br>
+            <input name = "anim" class="btn btn-primary" type="submit" value="Rainbow">
           </form>
-
       </div>
       <!-- /.container-fluid -->
 
@@ -144,5 +145,4 @@
   <script src="../static/js/sb-admin.min.js"></script>
 
 </body>
-
 </html>
