@@ -60,17 +60,20 @@ def my_form_post_alcool():
 
 @app.route('/porte')
 def my_form_porte():
-    return render_template('on_off.html', titre="Porte")
+    led_porte = receiveColor("porte")
+    return render_template('on_off.html', led=not led_porte[:3] == '#00', titre="Porte")
 
 
 @app.route('/radioactif')
 def my_form_radioactif():
-    return render_template('on_off.html', titre="Radioactif")
+    led_radio = receiveColor("radioactif")
+    return render_template('on_off.html', led=not led_radio[:3] == '#00', titre="Radioactif")
 
 
 @app.route('/infrabel')
 def my_form_infrabel():
-    return render_template('on_off.html', titre="Infrabel")
+    led_infra = receiveColor("infrabel")
+    return render_template('on_off.html', led=not led_infra[:3] == '#00', titre="Infrabel")
 
 
 @app.route('/exterior')
