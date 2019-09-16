@@ -151,13 +151,16 @@
 				<!-- Page Content -->
 				<h1>Vive les leds</h1>
 				{% if led %}
-				<p id="led_state">Les leds sont allumées </span></p>
-				{% else %}
-				<p>Les leds sont eteintes</p>
-				{% endif %}
+				<p id="led_state">Les leds sont allumées</p>
 				<form method="POST">
 					<input type="checkbox" checked id="switch" onchange="led_state()" /><label for="switch">Toggle </label>
 				</form>
+				{% else %}
+				<p id="led_state">Les leds sont eteintes</p>
+				<form method="POST">
+					<input type="checkbox" id="switch" onchange="led_state()" /><label for="switch">Toggle </label>
+				</form>
+				{% endif %}
 
 			</div>
 			<!-- /.container-fluid -->
@@ -194,6 +197,12 @@
 </body>
 <script type="text/javascript">
 	function led_state() {
+		var state = document.getElementById("led_state");
+		if(state.innerHTML == "Les leds sont eteintes"){
+			state.innerHTML = "Les leds sont allumées";
+		}else{
+			state.innerHTML = "Les leds sont eteintes";
+		}
 		$.post("/background_process", {
 			on: document.getElementById("switch").checked,
 			topic : JSON.stringify(document.getElementById("topic").text)
