@@ -124,9 +124,9 @@ void loop(){
   if(millis()%10 == 0){
 
     if(animationStarted){
-      double chose1 = abs((int)(255.0*sin((double)animStep/100.0)));
-      double chose2 = abs((int)(255.0*sin((double)animStep/200.0)));
-      double chose3 = abs((int)(255.0*sin((double)animStep/300.0)));
+      double chose1 = abs((int)(255.0*sin((double)animStep/1000)));
+      double chose2 = abs((int)(255.0*sin(((double)animStep+5000)/1000)));
+      double chose3 = abs((int)(255.0*sin(((double)animStep+10000)/1000)));
 
       if(IsOn) analogWrite(RED,   MAXF*chose1/255.0);
       if(IsOn) analogWrite(GREEN, MAXF*chose2/255.0);
