@@ -74,7 +74,7 @@ def my_form():
             'btn-icon': 'fa-door-open',
             'link': '/porte',
             'color': '#04A200',
-            'on': receiveColor("exterior")[:3] != '#00',
+            'on': receiveColor("porte")[:3] != '#00',
             'multicolor': False
         }
     ]
