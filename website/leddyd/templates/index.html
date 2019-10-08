@@ -111,9 +111,23 @@
                 </div>
                 {% if button['multicolor'] %}
                     {% if button['intColor'] <= 0.5 %}
-                        <div class="mr-5 text-white">{{ button['name'] }}</div>
+                        <div class="mr-5 text-white">
+                            {{ button['name'] }} <br>
+                            {% if button['anim'] %}
+                                <i class="fas fa-frog"></i>
+                                Animation en cours !
+                                <i class="fas fa-frog fa-flip-horizontal"></i>
+                            {% endif %}
+                        </div>
                     {% else %}
-                        <div class="mr-5" style="color: black;">{{ button['name'] }}</div>
+                        <div class="mr-5" style="color: black;">
+                            {{ button['name'] }} <br>
+                            {% if button['anim'] %}
+                                <i class="fas fa-frog"></i>
+                                Animation en cours !
+                                <i class="fas fa-frog fa-flip-horizontal"></i>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% else %}
                     <div class="mr-5 text-white">{{ button['name'] }}</div>

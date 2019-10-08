@@ -29,6 +29,7 @@ def my_form():
             'color': receiveColor("plafond"),
             'intColor': getColorValue(receiveColor("plafond")),
             'on': receiveColor("plafond") != '#000000',
+            'anim': receiveAnim("plafond") != '#000000',
             'multicolor': True
         },
         {
@@ -39,6 +40,7 @@ def my_form():
             'color': receiveColor("alcool"),
             'intColor': getColorValue(receiveColor("alcool")),
             'on': receiveColor("alcool") != '#000000',
+            'anim': receiveAnim("plafond") != '#000000',
             'multicolor': True
         },
         {
@@ -88,16 +90,17 @@ def my_form():
 @app.route('/plafond')
 def my_form_plafond():
     return render_template(
-        'multicolor.html', hexa_col=receiveColor("plafond"), titre="Plafond")
+        'multicolor.html', hexa_col=receiveColor("plafond"),
+        anim_running=receiveAnim("plafond"), titre="Plafond")
 
 
 @app.route('/plafond', methods=['POST'])
 def my_form_post_plafond():
-    hexa_coul = request.form['text']
     anim = request.form.get('anim')
     if anim == "Rainbow":
         sendColor(255, 255, 255, "animation/plafond")
     else:
+        hexa_coul = request.form['text']
         coul_r = int(hexa_coul[1:3], 16)
         coul_g = int(hexa_coul[3:5], 16)
         coul_b = int(hexa_coul[5:7], 16)
@@ -105,22 +108,24 @@ def my_form_post_plafond():
         sendColor(0, 0, 0, "animation/plafond")
         sendColor(coul_r, coul_g, coul_b, "color/plafond")
     return render_template(
-        'multicolor.html', hexa_col=receiveColor("plafond"), titre="Plafond")
+        'multicolor.html', hexa_col=receiveColor("plafond"),
+        anim_running=receiveAnim("plafond"), titre="Plafond")
 
 
 @app.route('/alcool')
 def my_form_alcool():
     return render_template(
-        'multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
+        'multicolor.html', hexa_col=receiveColor("alcool"),
+        anim_running=receiveAnim("alcool"), titre="Alcool")
 
 
 @app.route('/alcool', methods=['POST'])
 def my_form_post_alcool():
-    hexa_coul = request.form['text']
     anim = request.form.get('anim')
     if anim == "Rainbow":
         sendColor(255, 255, 255, "animation/alcool")
     else:
+        hexa_coul = request.form['text']
         coul_r = int(hexa_coul[1:3], 16)
         coul_g = int(hexa_coul[3:5], 16)
         coul_b = int(hexa_coul[5:7], 16)
@@ -128,7 +133,8 @@ def my_form_post_alcool():
         sendColor(0, 0, 0, "animation/alcool")
         sendColor(coul_r, coul_g, coul_b, "color/alcool")
     return render_template(
-        'multicolor.html', hexa_col=receiveColor("alcool"), titre="Alcool")
+        'multicolor.html', hexa_col=receiveColor("alcool"),
+        anim_running=receiveAnim("alcool"), titre="Alcool")
 
 
 @app.route('/porte')
@@ -186,6 +192,17 @@ def receiveColor(topic):
         print("Error :", e)
         return "#000000"
 
+
+def receiveAnim(topic):
+    try:
+        messages = subscribe.simple(
+            "animation/{}".format(topic), qos=1,
+            retained=True, hostname="hal.lan")
+        color = "#" + messages.payload.hex()
+        return color
+    except Exception as e:
+        print("Error :", e)
+        return "#000000"
 
 if __name__ == '__main__':
     app.run(debug=True)
