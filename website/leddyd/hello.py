@@ -29,6 +29,7 @@ def my_form():
             'color': receiveColor("plafond"),
             'intColor': getColorValue(receiveColor("plafond")),
             'on': receiveColor("plafond") != '#000000',
+            'anim': receiveAnim("plafond") != '#000000',
             'multicolor': True
         },
         {
@@ -39,6 +40,7 @@ def my_form():
             'color': receiveColor("alcool"),
             'intColor': getColorValue(receiveColor("alcool")),
             'on': receiveColor("alcool") != '#000000',
+            'anim': receiveAnim("plafond") != '#000000',
             'multicolor': True
         },
         {
