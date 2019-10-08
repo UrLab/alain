@@ -103,6 +103,9 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       digitalWrite(LED_BUILTIN, LOW);
       animStep = 0;
     }
+    else{
+        animationStarted = false;
+    }
   }
 }
 
