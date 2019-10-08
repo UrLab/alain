@@ -126,9 +126,9 @@ void loop(){
       double chose2 = abs((int)(255.0*sin(((double)animStep+5000)/1000)));
       double chose3 = abs((int)(255.0*sin(((double)animStep+10000)/1000)));
 
-      if(IsOn) analogWrite(RED,   MAXF*chose1/255.0);
-      if(IsOn) analogWrite(GREEN, MAXF*chose2/255.0);
-      if(IsOn) analogWrite(BLUE,  MAXF*chose3/255.0);
+      if(IsOn) analogWrite(ALCOOL_R,   MAXF*chose1/255.0);
+      if(IsOn) analogWrite(ALCOOL_G, MAXF*chose2/255.0);
+      if(IsOn) analogWrite(ALCOOL_B,  MAXF*chose3/255.0);
       animStep ++;
     }
     else{
