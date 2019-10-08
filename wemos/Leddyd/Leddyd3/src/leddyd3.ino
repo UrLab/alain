@@ -2,11 +2,12 @@
 #include <Ticker.h>
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
-#include "../include/wifiConfig.h"
+#include "Wifi_config.h"
 
 #define RELAY 4
 //Les différents topics suivis
 #define ALCOOL_TOPIC "color/alcool"
+#define ANIMATION_TOPIC "animation/plafond"
 #define OPEN_TOPIC  "switch/opinator/levier"
 #define EXTERIOR_TOPIC "color/exterior"
 #define REFRESH_RATE 1
@@ -31,14 +32,13 @@ PubSubClient mqttClient(espClient);
 Ticker refresh;
 Ticker off;
 
-//pio init -b d1_mini_lite
-//pio run --target upload
-
 bool IsOn = true;
 double lastColor[3];
 double nextColor[3];
 double lastState = 0;
 double nextState = 255;
+bool animationStarted = false;
+long int animStep = 0;
 
 void reconnect() {
     String message = String(hostname) + " " + WiFi.localIP().toString() + " " + WiFi.macAddress();
@@ -46,8 +46,9 @@ void reconnect() {
         if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
             boolean res  = mqttClient.subscribe(ALCOOL_TOPIC, 1);
-            boolean res2  = mqttClient.subscribe(EXTERIOR_TOPIC, 1);
-            boolean res3 = mqttClient.subscribe(OPEN_TOPIC, 1);
+            boolean res2  = mqttClient.subscribe(ANIMATION_TOPIC, 1);
+            boolean res3  = mqttClient.subscribe(EXTERIOR_TOPIC, 1);
+            boolean res4 = mqttClient.subscribe(OPEN_TOPIC, 1);
         } else {
             delay(5000);
         }
@@ -85,12 +86,21 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       lastColor[2] = 0;
       lastState = 0;
     }
-  }else if(strcmp(topic, ALCOOL_TOPIC) == 0){
+  }
+  else if(strcmp(topic, ALCOOL_TOPIC) == 0){
     nextColor[0] = (double)payload[0];
     nextColor[1] = (double)payload[1];
     nextColor[2] = (double)payload[2];
-  }else if(strcmp(topic, EXTERIOR_TOPIC) == 0){
+  }
+  else if(strcmp(topic, EXTERIOR_TOPIC) == 0){
     nextState = (double)payload[0];
+  }
+  else if(strcmp(topic, ANIMATION_TOPIC) == 0){
+    if(!animationStarted && (int)payload[0] == 255){
+      animationStarted = true;
+      digitalWrite(LED_BUILTIN, LOW);
+      animStep = 0;
+    }
   }
 }
 
@@ -111,19 +121,31 @@ void loop(){
 
   //Mets les vraies valeurs de sortie à jour toutes les 10 millisecondes pour avoir une transition "propre" entre les états
   if(millis()%10 == 0){
-    for(int x=0;x<3;x++){
-      if(lastColor[x] != nextColor[x]){
-        if(lastColor[x] > nextColor[x]){
-          lastColor[x]--;
-        }else if(lastColor[x] < nextColor[x]){
-          lastColor[x]++;
+    if(animationStarted){
+      double chose1 = abs((int)(255.0*sin((double)animStep/1000)));
+      double chose2 = abs((int)(255.0*sin(((double)animStep+5000)/1000)));
+      double chose3 = abs((int)(255.0*sin(((double)animStep+10000)/1000)));
+
+      if(IsOn) analogWrite(RED,   MAXF*chose1/255.0);
+      if(IsOn) analogWrite(GREEN, MAXF*chose2/255.0);
+      if(IsOn) analogWrite(BLUE,  MAXF*chose3/255.0);
+      animStep ++;
+    }
+    else{
+      for(int x=0;x<3;x++){
+        if(lastColor[x] != nextColor[x]){
+          if(lastColor[x] > nextColor[x]){
+            lastColor[x]--;
+          }else if(lastColor[x] < nextColor[x]){
+            lastColor[x]++;
+          }
         }
       }
-    }
-    if(IsOn) analogWrite(ALCOOL_R,   MAXF*lastColor[0]/255.0);
-    if(IsOn) analogWrite(ALCOOL_G, MAXF*lastColor[1]/255.0);
-    if(IsOn) analogWrite(ALCOOL_B,  MAXF*lastColor[2]/255.0);
+      if(IsOn) analogWrite(ALCOOL_R,   MAXF*lastColor[0]/255.0);
+      if(IsOn) analogWrite(ALCOOL_G, MAXF*lastColor[1]/255.0);
+      if(IsOn) analogWrite(ALCOOL_B,  MAXF*lastColor[2]/255.0);
 
+    }
     if(nextState != lastState){
       if(lastState > nextState){
         lastState--;
