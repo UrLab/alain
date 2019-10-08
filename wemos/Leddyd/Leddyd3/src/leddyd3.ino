@@ -7,7 +7,7 @@
 #define RELAY 4
 //Les différents topics suivis
 #define ALCOOL_TOPIC "color/alcool"
-#define ANIMATION_TOPIC "animation/plafond"
+#define ANIMATION_TOPIC "animation/alcool"
 #define OPEN_TOPIC  "switch/opinator/levier"
 #define EXTERIOR_TOPIC "color/exterior"
 #define REFRESH_RATE 1
