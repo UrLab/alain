@@ -86,19 +86,25 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       lastColor[1] = 0;
       lastColor[2] = 0;
     }
-  }else if(strcmp(topic, RGB_TOPIC) == 0){
+  }
+  else if(strcmp(topic, RGB_TOPIC) == 0){
     animationStarted = false;
     digitalWrite(LED_BUILTIN, HIGH);
     nextColor[0] = (double)payload[0];
     nextColor[1] = (double)payload[1];
     nextColor[2] = (double)payload[2];
-  }else if(strcmp(topic, DOOR_TOPIC) == 0){
+  }
+  else if(strcmp(topic, DOOR_TOPIC) == 0){
     nextState = (double)payload[0];
-  }else if(strcmp(topic, ANIMATION_TOPIC) == 0){
+  }
+  else if(strcmp(topic, ANIMATION_TOPIC) == 0){
     if(!animationStarted && (int)payload[0] == 255){
       animationStarted = true;
       digitalWrite(LED_BUILTIN, LOW);
       animStep = 0;
+    }
+    else{
+        animationStarted = false;
     }
   }
 }
@@ -109,8 +115,6 @@ void setup(){
   pinMode(GREEN, OUTPUT);
   pinMode(BLUE, OUTPUT);
   pinMode(GREEN_DOOR, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
 
   setup_wifi();
   ArduinoOTA.begin();
@@ -132,7 +136,8 @@ void loop(){
       if(IsOn) analogWrite(GREEN, MAXF*chose2/255.0);
       if(IsOn) analogWrite(BLUE,  MAXF*chose3/255.0);
       animStep ++;
-    }else{
+    }
+    else{
       for(int x=0;x<3;x++){
         if(lastColor[x] != nextColor[x]){
           if(lastColor[x] > nextColor[x]){
