@@ -18,6 +18,3 @@ Il y a pour l'instant 3 PCBs: <br>
 
 ## Software
 Les codes des trois wemos sont dans les trois dossiers du répertoire dans l'ordre cité ci dessus
-
-## Problèmes connus :
-Actuellement, le troisième PCB n'est pas encore opérationnel
