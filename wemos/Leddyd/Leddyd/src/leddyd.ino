@@ -89,7 +89,6 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   }
   else if(strcmp(topic, RGB_TOPIC) == 0){
     animationStarted = false;
-    digitalWrite(LED_BUILTIN, HIGH);
     nextColor[0] = (double)payload[0];
     nextColor[1] = (double)payload[1];
     nextColor[2] = (double)payload[2];
@@ -102,9 +101,6 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       animationStarted = true;
       digitalWrite(LED_BUILTIN, LOW);
       animStep = 0;
-    }
-    else{
-        animationStarted = false;
     }
   }
 }
