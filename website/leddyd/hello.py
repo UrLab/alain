@@ -188,7 +188,7 @@ def receiveColor(topic):
             "color/{}".format(topic), qos=1, retained=True, hostname="hal.lan")
         color = "#" + messages.payload.hex()
         if len(color) != 7:
-            raise ValueError('Hexadecimal value too short :' + color)
+            raise ValueError('Hexadecimal value too short')
         return color
     except Exception as e:
         print("Error :", e)
