@@ -1,3 +1,10 @@
+/*
+    Leddyd2 :
+    Contrôle :
+    - Strip Mauve dans la rigole
+    - Strip Orange autour du panneau belgacom
+*/
+
 #include <ArduinoOTA.h>
 #include <Ticker.h>
 #include "ESP8266WiFi.h"

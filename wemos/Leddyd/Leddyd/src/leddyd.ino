@@ -1,3 +1,10 @@
+/*
+    Leddyd1 :
+    Contrôle :
+    - Strip RGB du plafond
+    - Strip Verte dans la porte
+*/
+
 #include <ArduinoOTA.h>
 #include <Ticker.h>
 #include "ESP8266WiFi.h"

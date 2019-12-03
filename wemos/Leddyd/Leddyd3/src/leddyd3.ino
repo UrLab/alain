@@ -1,3 +1,10 @@
+/*
+    Leddyd3 :
+    Contrôle :
+    - Strip RGB Derrière le panneau alcool
+    - Strip Verte dans le couloir
+*/
+
 #include <ArduinoOTA.h>
 #include <Ticker.h>
 #include "ESP8266WiFi.h"
