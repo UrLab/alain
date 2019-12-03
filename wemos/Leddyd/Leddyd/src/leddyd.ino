@@ -9,7 +9,7 @@
 #include <Ticker.h>
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
-#include "wifiConfig.h"
+#include "../../../wifiConfig.h"
 
 #define RELAY 4
 //Les différents topics suivis
@@ -52,10 +52,10 @@ void reconnect() {
     while (!mqttClient.connected()) {
         if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
-            boolean res  = mqttClient.subscribe(RGB_TOPIC, 1);
-            boolean res2  = mqttClient.subscribe(ANIMATION_TOPIC, 1);
-            boolean res3 = mqttClient.subscribe(DOOR_TOPIC, 1);
-            boolean res4 = mqttClient.subscribe(OPEN_TOPIC, 1);
+            mqttClient.subscribe(RGB_TOPIC, 1);
+            mqttClient.subscribe(ANIMATION_TOPIC, 1);
+            mqttClient.subscribe(DOOR_TOPIC, 1);
+            mqttClient.subscribe(OPEN_TOPIC, 1);
         } else {
             delay(5000);
         }
@@ -131,13 +131,13 @@ void loop(){
   if(millis()%10 == 0){
 
     if(animationStarted){
-      double chose1 = abs((int)(255.0*sin((double)animStep/1000)));
-      double chose2 = abs((int)(255.0*sin(((double)animStep+5000)/1000)));
-      double chose3 = abs((int)(255.0*sin(((double)animStep+10000)/1000)));
+      double r = abs((int)(255.0*sin((double)animStep/1000)));
+      double g = abs((int)(255.0*sin(((double)animStep+5000)/1000)));
+      double b = abs((int)(255.0*sin(((double)animStep+10000)/1000)));
 
-      if(IsOn) analogWrite(RED,   MAXF*chose1/255.0);
-      if(IsOn) analogWrite(GREEN, MAXF*chose2/255.0);
-      if(IsOn) analogWrite(BLUE,  MAXF*chose3/255.0);
+      if(IsOn) analogWrite(RED,   MAXF*r/255.0);
+      if(IsOn) analogWrite(GREEN, MAXF*g/255.0);
+      if(IsOn) analogWrite(BLUE,  MAXF*b/255.0);
       animStep ++;
     }
     else{

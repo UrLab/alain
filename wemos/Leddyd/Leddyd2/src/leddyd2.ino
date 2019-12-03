@@ -9,7 +9,7 @@
 #include <Ticker.h>
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
-#include "../include/Wifi_config.h"
+#include "../../../wifiConfig.h"
 
 #define RELAY 4
 //Les différents topics suivis
@@ -59,11 +59,11 @@ void reconnect() {
     while (!mqttClient.connected()) {
         if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
-            boolean res  = mqttClient.subscribe(RADIOACTIF_TOPIC, 1);
-            boolean res2 = mqttClient.subscribe(INFRABEL_TOPIC, 1);
-            boolean res3 = mqttClient.subscribe(OPEN_TOPIC, 1);
-            boolean res4 = mqttClient.subscribe(NOEILDROIT_TOPIC, 1);
-            boolean res5 = mqttClient.subscribe(NOEILGAUCHE_TOPIC, 1);
+            mqttClient.subscribe(RADIOACTIF_TOPIC, 1);
+            mqttClient.subscribe(INFRABEL_TOPIC, 1);
+            mqttClient.subscribe(OPEN_TOPIC, 1);
+            mqttClient.subscribe(NOEILDROIT_TOPIC, 1);
+            mqttClient.subscribe(NOEILGAUCHE_TOPIC, 1);
         } else {
             delay(5000);
         }

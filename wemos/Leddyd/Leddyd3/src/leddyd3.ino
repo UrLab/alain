@@ -9,7 +9,7 @@
 #include <Ticker.h>
 #include "ESP8266WiFi.h"
 #include "PubSubClient.h"
-#include "Wifi_config.h"
+#include "../../../wifiConfig.h"
 
 #define RELAY 4
 //Les différents topics suivis
