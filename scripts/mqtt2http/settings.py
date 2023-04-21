@@ -1,12 +1,10 @@
+import os
 import logging
 
-MQTT_SERVER = "localhost"
+
+MQTT_SERVER = os.environ.get("MQTT_HOST", "192.168.42.20")
 
 INCUBATOR_BASE_URL = "https://urlab.be"
-INCUBATOR_SECRET = "vairie secrette"
+INCUBATOR_SECRET = os.environ.get("INCUBATOR_SECRET", "vairie secrette")
+print(INCUBATOR_SECRET)
 LOG_LEVEL = logging.DEBUG
-
-try:
-    from local_settings import * # NOQA
-except ImportError:
-    pass

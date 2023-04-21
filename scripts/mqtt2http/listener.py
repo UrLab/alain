@@ -11,18 +11,18 @@ logger = logging.getLogger(__name__)
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+    logger.info("Connected with result code " + str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("switch/opinator/levier")
+    client.subscribe("opinator")
 
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic + " " + str(msg.payload))
+    logger.info(msg.topic + " " + str(msg.payload))
 
-    if msg.topic == "switch/opinator/levier":
+    if msg.topic == "opinator":
         assert msg.payload in (b"0", b"1")
         is_up = msg.payload == b"1"
         requests.post(
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     logging.info(" ")
-    logging.info("-" * 50)
+    logging.info("-" * 20)
     logging.info(" ")
 
     try:
