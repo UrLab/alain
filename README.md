@@ -27,4 +27,4 @@ Chaque projet PlatformIO pour chaque ESP se trouve dans son dossier respectif da
 * évitez de laisser des mots de passe dans les codes (le code sera compilé avec wifiConfig.h dans le repo)
 
 # Documentation :
-Nous avons de la documentation un peu plus détaillée sur le [wiki](https://urlab.be/wiki/hal1/) d'UrLab
+Nous avons de la documentation un peu plus détaillée sur le [wiki](https://urlab.be/r/hal1) d'UrLab
