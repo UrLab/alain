@@ -1,53 +1,43 @@
-#include "ESP8266WiFi.h"
+#include <Arduino.h>
+#include <ESP8266WiFi.h>
 #include "PubSubClient.h"
-#include <ArduinoOTA.h>
-#include "../../../../wifiConfig.h"
-
-#define LEVIER D1
 
 const char* hostname = "opinator";
-const char* ssid = SSID;
-const char* password = PASSWORD;
-const char* mqtt_server = "hal.lan";
-const int a = 0;
+const char* ssid = "wifiname";
+const char* password = "wifipassword";
+const char* mqtt_server = "192.168.42.20";
 
-unsigned long last_change_time = 0 ;
-
-int last_state = HIGH;
-int state = HIGH;
+// #define LED D0
+#define BOUTON D1
+#define LED D0
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
-void setup_wifi();
-void setup() {
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, LOW);
-    pinMode(LEVIER, INPUT_PULLUP);
 
-    setup_wifi();
-    ArduinoOTA.begin();
-    mqttClient.setServer(mqtt_server, 1883);
-}
+int state;
+int last_state;
+
 
 void setup_wifi() {
     delay(10);
 
-    String superHostname = String("hal-") + hostname;
     WiFi.mode(WIFI_STA);
-    WiFi.hostname(superHostname);
+    WiFi.hostname(hostname);
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
 
     WiFi.begin(ssid, password);
-
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
+        Serial.print("wifi ");
+        Serial.println(WiFi.status());
     }
 }
 
 void reconnect() {
     String message = String(hostname) + " " + WiFi.localIP().toString() + " " + WiFi.macAddress();
     while (!mqttClient.connected()) {
+        Serial.println(mqttClient.connect(hostname));
         if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
         } else {
@@ -55,20 +45,37 @@ void reconnect() {
         }
     }
 }
-void open() {
-  state = digitalRead(LEVIER);
-  String topic = "switch/"+ String(hostname) + "/levier";
-  if (state != last_state && (millis()) - last_change_time  > 500) {
-    last_change_time = millis();
-    mqttClient.publish(topic.c_str(), (state == HIGH) ? "0" : "1", true);
-    last_state = state;
-  }
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(BOUTON, INPUT_PULLUP);
+    pinMode(LED, OUTPUT);
+
+    setup_wifi();
+    mqttClient.setServer(mqtt_server, 1883);
 }
+
+void open() {
+    state = digitalRead(BOUTON);
+    if (last_state!=state){
+        if (state == HIGH){
+            mqttClient.publish(hostname, "1", true);
+            digitalWrite(LED, HIGH);
+        }
+        else{
+            mqttClient.publish(hostname, "0", true);
+            digitalWrite(LED, LOW);
+        }
+    }
+    last_state = state;
+    delay(500);
+}
+
+
 void loop() {
     if (!mqttClient.connected()) {
         reconnect();
     }
     mqttClient.loop();
-    ArduinoOTA.handle();
     open();
 }
