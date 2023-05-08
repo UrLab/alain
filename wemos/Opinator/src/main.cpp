@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "PubSubClient.h"
+#include "../../wifiConfig.h"
 
 const char* hostname = "opinator";
-const char* ssid = "wifiname";
-const char* password = "wifipassword";
-const char* mqtt_server = "192.168.42.20";
+const char* ssid = SSID;
+const char* password = PASSWORD;
+const char* mqtt_server = "hal1.lan";
 
 // #define LED D0
 #define BOUTON D1
@@ -37,7 +38,6 @@ void setup_wifi() {
 void reconnect() {
     String message = String(hostname) + " " + WiFi.localIP().toString() + " " + WiFi.macAddress();
     while (!mqttClient.connected()) {
-        Serial.println(mqttClient.connect(hostname));
         if (mqttClient.connect(hostname)) {
             mqttClient.publish("connect", message.c_str());
         } else {
@@ -47,7 +47,6 @@ void reconnect() {
 }
 
 void setup() {
-    Serial.begin(9600);
     pinMode(BOUTON, INPUT_PULLUP);
     pinMode(LED, OUTPUT);
 
